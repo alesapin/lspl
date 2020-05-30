@@ -81,7 +81,6 @@ SET(LSPL_CORE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src/main )
 
 add_library(lspl SHARED ${LSPL_CORE_SOURCES})
 target_include_directories(lspl PRIVATE ${AOT_INCLUDE_DIR} PUBLIC ${LSPL_CORE_INCLUDE_DIRS})
-add_dependencies(lspl aot_bundle)
 target_link_libraries(lspl PRIVATE ${Boost_SYSTEM_LIBRARY})
 
 if(WIN32)
