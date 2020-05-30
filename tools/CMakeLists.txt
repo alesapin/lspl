@@ -5,23 +5,13 @@ include(../common/CMakeCommon.cmake)
 
 include_directories( src/main )
 
-find_package(Boost COMPONENTS system)
-
-if(WIN32)
-else(WIN32)
-    add_definitions(-std=c++11 -Wno-deprecated)
-    if (NOT Boost_SYSTEM_FOUND)
-        set(Boost_SYSTEM_LIBRARY ${CMAKE_SOURCE_DIR}/../deps/boost/build/lib/libboost_system.a)
-    endif()
-endif(WIN32)
-
 ### LsplConsole
 
 set(LSPL_CONSOLE_SOURCES
 	src/console.cpp
 )
 
-add_executable(lspl-console ${LSPL_CONSOLE_SOURCES})
+add_executable(lspl-console ${LSPL_CONSOLE_SOURCES} ${Boost_SYSTEM_LIBRARY})
 
 target_link_libraries(lspl-console lspl)
 
