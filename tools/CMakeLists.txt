@@ -1,17 +1,13 @@
 cmake_minimum_required(VERSION 2.6)
 project(LSPL_TOOLS)
 
-include_directories( src/main )
-
 ### LsplConsole
 
-set(LSPL_CONSOLE_SOURCES
-	src/console.cpp
-)
+set(LSPL_CONSOLE_SOURCES src/console.cpp)
 
-add_executable(lspl-console ${LSPL_CONSOLE_SOURCES} ${Boost_SYSTEM_LIBRARY})
+add_executable(lspl-console ${LSPL_CONSOLE_SOURCES})
 
-target_link_libraries(lspl-console lspl)
+target_link_libraries(lspl-console lspl ${Boost_SYSTEM_LIBRARY})
 
 ### LsplGenerator
 
