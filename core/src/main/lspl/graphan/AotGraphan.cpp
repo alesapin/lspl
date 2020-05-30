@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <iostream>
 
-#include "aot/Source/GraphanLib/GraphmatFile.h"
+#include <GraphanLib/GraphmatFile.h>
 
 #ifdef WIN32
 #define PD "\\"

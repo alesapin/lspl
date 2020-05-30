@@ -9,7 +9,7 @@
 
 #include "AotMorphology.h"
 
-#include "aot/Source/AgramtabLib/rus_consts.h"
+#include <AgramtabLib/rus_consts.h>
 
 using namespace lspl::text::attributes;
 

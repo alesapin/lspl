@@ -1,19 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(LSPL_CORE)
 
-include(../common/CMakeCommon.cmake)
-find_package(Boost COMPONENTS system)
-
-if(WIN32)
-else(WIN32)
-    add_definitions(-std=c++11 -Wno-deprecated)
-    if (NOT Boost_SYSTEM_FOUND)
-        set(Boost_SYSTEM_LIBRARY ${CMAKE_SOURCE_DIR}/../deps/boost/build/lib/libboost_system.a)
-    endif()
-endif(WIN32)
-
-include_directories( src/main )
-
 ### lspl-core library
 
 set(LSPL_CORE_SOURCES
@@ -90,29 +77,27 @@ set(LSPL_CORE_SOURCES
     src/main/lspl/text/attributes/AttributeType.cpp
 )
 
-add_library(lspl SHARED ${LSPL_CORE_SOURCES})
-target_link_libraries(lspl ${Boost_SYSTEM_LIBRARY})
+SET(LSPL_CORE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src/main)
 
-set_target_properties(lspl
-    PROPERTIES
-    PREFIX "${MY_TARGETLIB_PREFIX}"
-    SUFFIX "${MY_TARGETLIB_SUFFIX}"
-)
+add_library(lspl SHARED ${LSPL_CORE_SOURCES})
+target_include_directories(lspl PRIVATE ${AOT_INCLUDE_DIR} ${LSPL_CORE_INCLUDE_DIRS})
+add_dependencies(lspl aot_bundle)
+target_link_libraries(lspl PRIVATE ${Boost_SYSTEM_LIBRARY})
 
 if(WIN32)
-    add_custom_command(TARGET lspl POST_BUILD 
-        COMMAND "${CMAKE_COMMAND}" -E copy 
+    add_custom_command(TARGET lspl POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy
             "${ICONV_PATH}/bin/libcharset1.dll"
             "${ICONV_PATH}/bin/libiconv2.dll"
             "${ICONV_PATH}/bin/libintl3.dll"
-            "${CMAKE_BINARY_DIR}/$<CONFIGURATION>/" 
+            "${CMAKE_BINARY_DIR}/$<CONFIGURATION>/"
         COMMENT "Copying to output directory")
 
     target_link_libraries(lspl pcre pcrecpp pcreposix libiconv common GraphanLib LemmatizerLib StructDictLib MorphWizardLib AgramtabLib)
 elseif(APPLE)
-    target_link_libraries(lspl pcrecpp iconv pcre Graphanrst Lemmatizerrst StructDictrst MorphWizardrst Agramtabrst)
+    target_link_libraries(lspl PRIVATE pcrecpp iconv pcre PUBLIC ${AOT_LIBRARIES})
 else(WIN32)
-    target_link_libraries(lspl pcrecpp pcre Graphanrst Lemmatizerrst StructDictrst MorphWizardrst Agramtabrst)
+  target_link_libraries(lspl PRIVATE pcrecpp pcre PUBLIC ${AOT_LIBRARIES})
 endif(WIN32)
 
 ### lspl-find binary
@@ -121,9 +106,10 @@ set(LSPL_FIND_SOURCES
 	src/find/find.cpp
 )
 
-add_executable(lspl-find ${LSPL_FIND_SOURCES})
+add_executable(lspl-search ${LSPL_FIND_SOURCES})
 
-target_link_libraries(lspl-find lspl)
+target_include_directories(lspl-search PRIVATE ${LSPL_CORE_INCLUDE_DIRS})
+target_link_libraries(lspl-search lspl)
 
 ### lspl-test binary
 
@@ -141,6 +127,7 @@ set(LSPL_TEST_SOURCES
 add_executable(lspl-test ${LSPL_TEST_SOURCES})
 
 target_link_libraries(lspl-test lspl)
+target_include_directories(lspl-test PRIVATE ${LSPL_CORE_INCLUDE_DIRS})
 
 ### lspl-benchmark binary
 
@@ -151,6 +138,7 @@ set(LSPL_BENCHMARK_SOURCES
 add_executable(lspl-benchmark ${LSPL_BENCHMARK_SOURCES})
 
 target_link_libraries(lspl-benchmark lspl)
+target_include_directories(lspl-benchmark PRIVATE ${LSPL_CORE_INCLUDE_DIRS})
 
 # Flags for effective error parsing
 

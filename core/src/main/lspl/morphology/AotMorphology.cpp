@@ -11,11 +11,11 @@
 
 #include <string.h>
 
-#include "aot/Source/AgramtabLib/RusGramTab.h"
-#include "aot/Source/LemmatizerLib/Lemmatizers.h"
-#include "aot/Source/LemmatizerLib/Paradigm.h"
+#include <AgramtabLib/RusGramTab.h>
+#include <LemmatizerLib/Lemmatizers.h>
+#include <LemmatizerLib/Paradigm.h>
 
-#include "aot/Source/common/utilit.h"
+#include <common/utilit.h>
 
 using namespace lspl::text::attributes;
 

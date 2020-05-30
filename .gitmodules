@@ -1,6 +1,12 @@
-[submodule "deps/boost"]
-	path = deps/boost
-	url = git://github.com/boostorg/boost
 [submodule "deps/pcre"]
-	path = deps/pcre
+	path = contrib/pcre
 	url = https://github.com/vmg/pcre.git
+[submodule "deps/XMorphy"]
+	path = contrib/XMorphy
+	url = https://github.com/alesapin/XMorphy.git
+[submodule "contrib/system"]
+	path = contrib/boost/system
+	url = https://github.com/boostorg/system.git
+[submodule "contrib/boost/config"]
+	path = contrib/boost/config
+	url = https://github.com/boostorg/config.git
