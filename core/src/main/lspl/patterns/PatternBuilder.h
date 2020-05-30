@@ -8,21 +8,20 @@
 #include "../Namespace.h"
 #include "../transforms/TransformBuilder.h"
 
-#include <string>
 #include <map>
-
+#include <memory>
+#include <string>
 #include <complex>
-#include <boost/scoped_ptr.hpp>
 
 namespace lspl { namespace patterns {
 
-class LSPL_EXPORT PatternBuildingException : public base::Exception {
+class PatternBuildingException : public base::Exception {
 public:
 	PatternBuildingException(const std::string & description) :
 		Exception( description ) {
 	}
 
-	~PatternBuildingException() throw() {}
+	~PatternBuildingException() {}
 };
 
 class LSPL_EXPORT PatternBuilder : public base::RefCountObject, public base::IdentifiedObject<PatternBuilder> {
@@ -56,7 +55,7 @@ public:
 		Parser( NamespaceRef space, const std::map<std::string, transforms::TransformBuilderRef>& transformBuilders ) : space( space ), transformBuilders( transformBuilders ) {}
 		virtual ~Parser() {}
 
-		virtual BuildInfo build( const char * str ) throw (PatternBuildingException) = 0;
+		virtual BuildInfo build( const char * str ) = 0;
 		virtual BuildInfo buildNoException(const char * str ) = 0;
 
 	public:
@@ -72,7 +71,7 @@ public:
 	/**
 	 * Определить новые шаблоны из исходника
 	 */
-	BuildInfo build( const std::string & str ) throw (PatternBuildingException);
+	BuildInfo build( const std::string & str );
 	BuildInfo buildNoException(const std::string& str);
 public:
 
@@ -84,7 +83,7 @@ private:
 	/**
 	 * Текущий парсер билдера
 	 */
-	boost::scoped_ptr<Parser> parser;
+	std::unique_ptr<Parser> parser;
 };
 
 } } // namespace lspl::patterns
