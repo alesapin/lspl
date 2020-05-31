@@ -96,7 +96,7 @@ if(WIN32)
 elseif(APPLE)
     target_link_libraries(lspl PRIVATE pcrecpp iconv pcre PUBLIC ${AOT_LIBRARIES})
 else(WIN32)
-  target_link_libraries(lspl PRIVATE pcrecpp pcre PUBLIC ${AOT_LIBRARIES})
+  target_link_libraries(lspl PRIVATE pcrecpp pcre PUBLIC ${AOT_LIBRARIES} ${Xmorphy_LIBRARY})
 endif(WIN32)
 
 ### lspl-find binary

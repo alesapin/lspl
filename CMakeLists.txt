@@ -27,11 +27,9 @@ set (CMAKE_C_FLAGS_DEBUG                 "${CMAKE_C_FLAGS_DEBUG} -O0 -g3 -ggdb3 
 set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lc -lm -lrt -lpthread -ldl")
 set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lc -lm -lrt -lpthread -ldl")
 
-
-
-
 include (cmake/aot.cmake)
 include (cmake/boost.cmake)
+include (cmake/xmorphy.cmake)
 
 add_subdirectory(contrib)
 
