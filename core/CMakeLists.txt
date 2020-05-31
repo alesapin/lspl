@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
 project(LSPL_CORE)
 
+
+set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_POSITION_INDEPENDENT_CODE ON)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 ### lspl-core library
 
 set(LSPL_CORE_SOURCES
@@ -11,6 +15,7 @@ set(LSPL_CORE_SOURCES
     src/main/lspl/graphan/Unit.cpp
     src/main/lspl/graphan/Graphan.cpp
     src/main/lspl/graphan/AotGraphan.cpp
+    src/main/lspl/graphan/XmorphyGraphan.cpp
 
     src/main/lspl/morphology/WordForm.cpp
     src/main/lspl/morphology/Morphology.cpp

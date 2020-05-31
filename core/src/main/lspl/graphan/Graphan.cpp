@@ -7,7 +7,7 @@
 #include "../base/BaseInternal.h"
 
 #include "Graphan.h"
-#include "AotGraphan.h"
+#include "XmorphyGraphan.h"
 
 namespace lspl { namespace graphan {
 
@@ -21,7 +21,7 @@ Graphan::~Graphan() {
 
 Graphan & Graphan::instance() {
 	if ( !singletonInstance)
-		singletonInstance = new AotGraphan();
+		singletonInstance = new XmorphyGraphan();
 
 	return *singletonInstance;
 }
