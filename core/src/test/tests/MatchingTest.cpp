@@ -33,125 +33,125 @@ namespace lspl { namespace tests {
 
 static void testRegexpTokens() {
 	// Regexp tokens
-	assertMatches( "Мама", 0, 1, "'мама'" );
-	assertMatches( "Мама", 0, 1, "'ма.*а'" );
-	assertMatches( "Маша", 0, 1, "'ма.*а'" );
-	assertMatches( "Мамаша", 0, 1, "'ма.*а'" );
-	assertNoMatches( "Мошка", "'ма.*а'" );
+	assertMatches( "РњР°РјР°", 0, 1, "'РјР°РјР°'" );
+	assertMatches( "РњР°РјР°", 0, 1, "'РјР°.*Р°'" );
+	assertMatches( "РњР°С€Р°", 0, 1, "'РјР°.*Р°'" );
+	assertMatches( "РњР°РјР°С€Р°", 0, 1, "'РјР°.*Р°'" );
+	assertNoMatches( "РњРѕС€РєР°", "'РјР°.*Р°'" );
 }
 
 static void testSimplePatterns() {
 	// Simple
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N V" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N<мама> V" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N V<N=V>" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N { V<N=V> }<1,1>" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N { { V<N=V> }<1,1> }<1,1>" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N V<N.g=V.g>" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N<g=fem> V" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = Noun<gender=feminine> Verb" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = \"мама\" V" );
-	assertNoMatches( "Мама мыла раму", "Act = N<папа> V" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N V" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N<РјР°РјР°> V" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N V<N=V>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N { V<N=V> }<1,1>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N { { V<N=V> }<1,1> }<1,1>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N V<N.g=V.g>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N<g=fem> V" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = Noun<gender=feminine> Verb" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = \"РјР°РјР°\" V" );
+	assertNoMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "Act = N<РїР°РїР°> V" );
 }
 
 static void testRestrictionsOnBase() {
 	// Pattern restrictions
-	assertMatches( "Мама мыла раму", 0, 2, "N V <V.b='МЫТЬ'>" );
-	assertNoMatches( "Мама мыла раму", "N V <V.b='БЕГАТЬ'>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N V <V.b='РњР«РўР¬'>" );
+	assertNoMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "N V <V.b='Р‘Р•Р“РђРўР¬'>" );
 
 	// Matcher restrictions
-	assertMatches( "Мама мыла раму", 0, 2, "N V<b='МЫТЬ'>" );
-	assertNoMatches( "Мама мыла раму", "N V<b='БЕГАТЬ'>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N V<b='РњР«РўР¬'>" );
+	assertNoMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "N V<b='Р‘Р•Р“РђРўР¬'>" );
 }
 
 static void testRestrictionsOnStem() {
 	// Pattern restrictions
-	assertMatches( "Мама мыла раму", 0, 2, "N V <V.st='М'>" );
-	assertNoMatches( "Мама мыла раму", "N V <V.st='БЕГ'>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N V <V.st='Рњ'>" );
+	assertNoMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "N V <V.st='Р‘Р•Р“'>" );
 
 	// Matcher restrictions
-	assertMatches( "Мама мыла раму", 0, 2, "N V <st='М'>" );
-	assertNoMatches( "Мама мыла раму", "N V <st='БЕГ'>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N V <st='Рњ'>" );
+	assertNoMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "N V <st='Р‘Р•Р“'>" );
 }
 
 static void testTerm() {
 	// Term
-	assertMatches( "Процессор базы данных", 0, 3, "\"процессор\" \"базы\" \"данных\"" );
-	assertMatches( "Процессор базы данных", 0, 3, "N1<процессор> { \"базы\" \"данных\" | \"ввода-вывода\" }<1,1>" );
+	assertMatches( "РџСЂРѕС†РµСЃСЃРѕСЂ Р±Р°Р·С‹ РґР°РЅРЅС‹С…", 0, 3, "\"РїСЂРѕС†РµСЃСЃРѕСЂ\" \"Р±Р°Р·С‹\" \"РґР°РЅРЅС‹С…\"" );
+	assertMatches( "РџСЂРѕС†РµСЃСЃРѕСЂ Р±Р°Р·С‹ РґР°РЅРЅС‹С…", 0, 3, "N1<РїСЂРѕС†РµСЃСЃРѕСЂ> { \"Р±Р°Р·С‹\" \"РґР°РЅРЅС‹С…\" | \"РІРІРѕРґР°-РІС‹РІРѕРґР°\" }<1,1>" );
 }
 
 static void testTokensInLoop() {
-	assertMatches( "Мама мыла раму", 0, 1, "Act = { \"мама\" }<1>" );
-	assertMatches( "Мама мама раму", 0, 2, "Act = { \"мама\" }<2>" );
-	assertMatches( "Да да да", 0, 3, "AAA = { 'да' }<3>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "Act = { \"РјР°РјР°\" }<1>" );
+	assertMatches( "РњР°РјР° РјР°РјР° СЂР°РјСѓ", 0, 2, "Act = { \"РјР°РјР°\" }<2>" );
+	assertMatches( "Р”Р° РґР° РґР°", 0, 3, "AAA = { 'РґР°' }<3>" );
 }
 
 static void testLoopRestrictions() {
 	// Loop restrictions: positive
-	assertMatches( "Мама мыла раму", 0, 2, "Act = {N} V" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = {N} V<N=V>" );
-	assertMatches( "Мама мыла раму", 0, 2, "Act = {N} V<N.g=V.g>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = {N} V" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = {N} V<N=V>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = {N} V<N.g=V.g>" );
 
 	// Loop restriction: empty loop
-	assertMatches( "Мама мыла раму", 0, 1, "Act = [A] N" );
-	assertMatches( "Мама мыла раму", 0, 1, "Act = {A} N" );
-	assertMatches( "Мама мыла раму", 0, 1, "Act = {A} N <A=N>" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "Act = [A] N" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "Act = {A} N" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "Act = {A} N <A=N>" );
 
 	// Loop restriction: failing longest
-	assertMatches( "быстрое белая кошка", 1, 3, "Act = {A} N <A=N>" );
+	assertMatches( "Р±С‹СЃС‚СЂРѕРµ Р±РµР»Р°СЏ РєРѕС€РєР°", 1, 3, "Act = {A} N <A=N>" );
 }
 
 static void testLoopAlternatives() {
-	assertMatches( "Да да да", 0, 3, "AAA = { 'да' | 'нет' }<3>" );
-	assertMatches( "Нет нет нет", 0, 3, "AAA = { 'да' | 'нет' }<3>" );
-	assertMatches( "Да нет да", 0, 3, "AAA = { 'да' | 'нет' }<3>" );
+	assertMatches( "Р”Р° РґР° РґР°", 0, 3, "AAA = { 'РґР°' | 'РЅРµС‚' }<3>" );
+	assertMatches( "РќРµС‚ РЅРµС‚ РЅРµС‚", 0, 3, "AAA = { 'РґР°' | 'РЅРµС‚' }<3>" );
+	assertMatches( "Р”Р° РЅРµС‚ РґР°", 0, 3, "AAA = { 'РґР°' | 'РЅРµС‚' }<3>" );
 }
 
 static void testMultipleEquality() {
 	// Multiple equality: positive
-	assertMatches( "Белая кошка мыла раму", 0, 3, "Act = A N V<A=N=V>" );
-	assertMatches( "Белая кошка мыла раму", 0, 3, "Act = A N V<A.g=N.g=V.g>" );
+	assertMatches( "Р‘РµР»Р°СЏ РєРѕС€РєР° РјС‹Р»Р° СЂР°РјСѓ", 0, 3, "Act = A N V<A=N=V>" );
+	assertMatches( "Р‘РµР»Р°СЏ РєРѕС€РєР° РјС‹Р»Р° СЂР°РјСѓ", 0, 3, "Act = A N V<A.g=N.g=V.g>" );
 
 	// Multiple equality: negative
-	assertNoMatches( "Белый кошка мыла раму", "Act = A N V<A=N=V>" );
-	assertNoMatches( "Белая кот мыла раму", "Act = A N V<A=N=V>" );
-	assertNoMatches( "Белая кошка мыл раму", "Act = A N V<A=N=V>" );
-	assertNoMatches( "Белый кошка мыла раму", "Act = A N V<A.g=N.g=V.g>" );
+	assertNoMatches( "Р‘РµР»С‹Р№ РєРѕС€РєР° РјС‹Р»Р° СЂР°РјСѓ", "Act = A N V<A=N=V>" );
+	assertNoMatches( "Р‘РµР»Р°СЏ РєРѕС‚ РјС‹Р»Р° СЂР°РјСѓ", "Act = A N V<A=N=V>" );
+	assertNoMatches( "Р‘РµР»Р°СЏ РєРѕС€РєР° РјС‹Р» СЂР°РјСѓ", "Act = A N V<A=N=V>" );
+	assertNoMatches( "Р‘РµР»С‹Р№ РєРѕС€РєР° РјС‹Р»Р° СЂР°РјСѓ", "Act = A N V<A.g=N.g=V.g>" );
 }
 
 static void testBaseEquality() {
 	// Base equality
-	assertMatches( "Мама, мама, что я буду делать?", 0, 3, "Act = W1 \",\" W2 <W1.b=W2.b>" );
+	assertMatches( "РњР°РјР°, РјР°РјР°, С‡С‚Рѕ СЏ Р±СѓРґСѓ РґРµР»Р°С‚СЊ?", 0, 3, "Act = W1 \",\" W2 <W1.b=W2.b>" );
 
-	assertNoMatches( "Кот прыгнул на стол", "Act = N<g=fem> V" );
-	assertNoMatches( "Кот прыгнула на стол", "Act = N V<N=V>" );
-	assertNoMatches( "Кот прыгнул на стол", "Act = W1 W2 <W1.b=W2.b>" );
+	assertNoMatches( "РљРѕС‚ РїСЂС‹РіРЅСѓР» РЅР° СЃС‚РѕР»", "Act = N<g=fem> V" );
+	assertNoMatches( "РљРѕС‚ РїСЂС‹РіРЅСѓР»Р° РЅР° СЃС‚РѕР»", "Act = N V<N=V>" );
+	assertNoMatches( "РљРѕС‚ РїСЂС‹РіРЅСѓР» РЅР° СЃС‚РѕР»", "Act = W1 W2 <W1.b=W2.b>" );
 
-	assertMatches( "Мама мыла раму", 0, 2, "Act = N V<N=V> ( N V )" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "Act = N V<N=V> ( N V )" );
 }
 
 static void testReusing1() {
 	NamespaceRef ns = new Namespace();
 
-	assertMatchesNS( ns, "Белая кошка шла по дорожке", 0, 1, "AA = A (A) | Pa (Pa)" );
-	assertMatchesNS( ns, "Белая кошка шла по дорожке", 0, 2, "TestA = AA N" );
-	assertMatchesNS( ns, "Белая кошка шла по дорожке", 0, 2, "TestB = AA N <AA=N>" );
+	assertMatchesNS( ns, "Р‘РµР»Р°СЏ РєРѕС€РєР° С€Р»Р° РїРѕ РґРѕСЂРѕР¶РєРµ", 0, 1, "AA = A (A) | Pa (Pa)" );
+	assertMatchesNS( ns, "Р‘РµР»Р°СЏ РєРѕС€РєР° С€Р»Р° РїРѕ РґРѕСЂРѕР¶РєРµ", 0, 2, "TestA = AA N" );
+	assertMatchesNS( ns, "Р‘РµР»Р°СЏ РєРѕС€РєР° С€Р»Р° РїРѕ РґРѕСЂРѕР¶РєРµ", 0, 2, "TestB = AA N <AA=N>" );
 }
 
 static void testReusing2() {
 	NamespaceRef ns = new Namespace();
 
-	assertNoMatchesNS( ns, "Мама мыла раму", "AA = A (A) | Pa (Pa)" );
-	assertMatchesNS( ns, "Мама мыла раму", 0, 1, "TestA = {AA} N" );
-	assertMatchesNS( ns, "Мама мыла раму", 0, 1, "TestB = {AA} N <Ap=N>" );
+	assertNoMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "AA = A (A) | Pa (Pa)" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "TestA = {AA} N" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "TestB = {AA} N <Ap=N>" );
 }
 
 static void testCommonNamespace() {
 	NamespaceRef ns = new Namespace();
 
-	assertMatchesNS( ns, "Мама мыла раму", 0, 1, "UN = N" );
-	assertMatchesNS( ns, "Мама мыла раму", 0, 2, "AB = UN V" );
-	assertMatchesNS( ns, "Мама мыла раму", 0, 2, "AC = UN V <UN=V>" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 1, "UN = N" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "AB = UN V" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "AC = UN V <UN=V>" );
 }
 
 static void testCompoundAttributes() {
@@ -161,55 +161,55 @@ static void testCompoundAttributes() {
 	builder->build( "UV = V (V AS src)" );
 	builder->build( "UUV = UV ( UV.src )" );
 
-	assertMatchesNS( ns, "Мама мыла раму", 0, 2, "AA = N UV (UV)" );
-	assertMatchesNS( ns, "Мама мыла раму", 0, 2, "AB = N UUV <N=UUV> (UUV)" );
-	assertMatchesNS( ns, "Кот мыла раму", 0, 2, "AC = N UUV <N=UUV> (UUV)" ); // TODO Вот такой вот парадокс
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "AA = N UV (UV)" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "AB = N UUV <N=UUV> (UUV)" );
+	assertMatchesNS( ns, "РљРѕС‚ РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "AC = N UUV <N=UUV> (UUV)" ); // TODO Р’РѕС‚ С‚Р°РєРѕР№ РІРѕС‚ РїР°СЂР°РґРѕРєСЃ
 }
 
 static void testDictionaries() {
 	base::Reference<dictionaries::MemoryDictionary> d = new dictionaries::MemoryDictionary( "DIC" );
-	d->add( "МЫТЬ", "РАМА" );
+	d->add( "РњР«РўР¬", "Р РђРњРђ" );
 
 	NamespaceRef ns = new Namespace();
 	ns->addDictionary( d );
 
-	assertMatchesNS( ns, "Мама мыла раму", 1, 3, "AA = W1 W2 <DIC(W1,W2)>" );
-	assertNoMatchesNS( ns, "Мама мыла раму", "AB = W1 W2 <DIC(W1 W2)>" );
-	assertNoMatchesNS( ns, "Мама мыла окно", "AB = W1 W2 <DIC(W1,W2)>" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 1, 3, "AA = W1 W2 <DIC(W1,W2)>" );
+	assertNoMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "AB = W1 W2 <DIC(W1 W2)>" );
+	assertNoMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° РѕРєРЅРѕ", "AB = W1 W2 <DIC(W1,W2)>" );
 }
 
 static void testDictionariesWithConcat() {
 	base::Reference<dictionaries::MemoryDictionary> d = new dictionaries::MemoryDictionary( "DIC" );
-	d->add( "МЫТЬ РАМА" );
+	d->add( "РњР«РўР¬ Р РђРњРђ" );
 
 	NamespaceRef ns = new Namespace();
 	ns->addDictionary( d );
 
-	assertMatchesNS( ns, "Мама мыла раму", 1, 3, "AA = W1 W2 <DIC(W1 W2)>" );
-	assertNoMatchesNS( ns, "Мама мыла раму", "AB = W1 W2 <DIC(W1,W2)>" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 1, 3, "AA = W1 W2 <DIC(W1 W2)>" );
+	assertNoMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "AB = W1 W2 <DIC(W1,W2)>" );
 }
 
 static void testDictionariesWithLiterals() {
 	base::Reference<dictionaries::MemoryDictionary> d = new dictionaries::MemoryDictionary( "DIC" );
-	d->add( "ОКНО", "РАМА" );
+	d->add( "РћРљРќРћ", "Р РђРњРђ" );
 
 	NamespaceRef ns = new Namespace();
 	ns->addDictionary( d );
 
-	assertMatchesNS( ns, "Мама мыла раму", 1, 3, "AA = W1 W2 <DIC('окно',W2)>" );
-	assertNoMatchesNS( ns, "Мама мыла раму", "AB = W1 W2 <DIC(W1,W2)>" );
+	assertMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 1, 3, "AA = W1 W2 <DIC('РѕРєРЅРѕ',W2)>" );
+	assertNoMatchesNS( ns, "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", "AB = W1 W2 <DIC(W1,W2)>" );
 }
 
 static void testRestrictedMatches() {
 	AgreementRestriction r;
 	r.addArgument( new AttributeExpression( new VariableExpression( SpeechPart::VERB, 1 ), AttributeKey::BASE ) );
-	r.addArgument( new ConstantExpression( "МЫТЬ" ) );
+	r.addArgument( new ConstantExpression( "РњР«РўР¬" ) );
 
-	assertMatches( "Мама мыла раму", 0, 2, "N1 V1" );
-	assertMatches( "Черный кот шел сам по себе", 1, 3, "N1 V1" );
+	assertMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N1 V1" );
+	assertMatches( "Р§РµСЂРЅС‹Р№ РєРѕС‚ С€РµР» СЃР°Рј РїРѕ СЃРµР±Рµ", 1, 3, "N1 V1" );
 
-	assertRestrictedMatches( "Мама мыла раму", 0, 2, "N1 V1", r );
-	assertNoRestrictedMatches( "Черный кот шел сам по себе", "N1 V1", r );
+	assertRestrictedMatches( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ", 0, 2, "N1 V1", r );
+	assertNoRestrictedMatches( "Р§РµСЂРЅС‹Р№ РєРѕС‚ С€РµР» СЃР°Рј РїРѕ СЃРµР±Рµ", "N1 V1", r );
 }
 
 cute::suite matchingSuite() {

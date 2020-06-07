@@ -46,21 +46,21 @@ namespace lspl { namespace tests {
 static void testSimplePatterns() {
 	// Simple
 	assertBuilds( "Act = N V" );
-	assertBuilds( "Act = N<бизнес> V" );
-	assertBuilds( "Act = N<бизнес-вумен> V" );
+	assertBuilds( "Act = N<Р±РёР·РЅРµСЃ> V" );
+	assertBuilds( "Act = N<Р±РёР·РЅРµСЃ-РІСѓРјРµРЅ> V" );
 	assertBuilds( "Act = N<g=fem> V" );
-	assertBuilds( "N2<координата, n=plur>" );
+	assertBuilds( "N2<РєРѕРѕСЂРґРёРЅР°С‚Р°, n=plur>" );
 	assertBuilds( "Act = Noun<gender=feminine> Verb Adjective" );
 	assertFails( "Act1 = N1 N1" ); // Wrong rule naming: Act1
 	assertFails( "Act = N1 N1 <3270 0" );
 	assertFails( "Act = N1 N1 <3=7>" );
-	assertFails( "N2<координата, n=frdscx>" );
+	assertFails( "N2<РєРѕРѕСЂРґРёРЅР°С‚Р°, n=frdscx>" );
 }
 
 static void testPatternNames() {
 	// Names
-	assertBuilds( "бизнесвуман = N<бизнес-вумен> V" );
-	assertBuilds( "бизнес-вуман = N<бизнес-вумен> V" );
+	assertBuilds( "Р±РёР·РЅРµСЃРІСѓРјР°РЅ = N<Р±РёР·РЅРµСЃ-РІСѓРјРµРЅ> V" );
+	assertBuilds( "Р±РёР·РЅРµСЃ-РІСѓРјР°РЅ = N<Р±РёР·РЅРµСЃ-РІСѓРјРµРЅ> V" );
 }
 
 static void testRestrictions() {
@@ -72,18 +72,18 @@ static void testRestrictions() {
 static void testUnnamedPatterns() {
 	// Unnamed
 	assertBuilds( "N V" );
-	assertBuilds( "N<бизнес> V" );
+	assertBuilds( "N<Р±РёР·РЅРµСЃ> V" );
 }
 
 static void testTokens() {
 	// Tokens
-	assertBuilds( "\"мама\"" );
-	assertBuilds( "'мама'" );
-	assertBuilds( "\"м.*ама\"" );
-	assertBuilds( "'мам+а'" );
+	assertBuilds( "\"РјР°РјР°\"" );
+	assertBuilds( "'РјР°РјР°'" );
+	assertBuilds( "\"Рј.*Р°РјР°\"" );
+	assertBuilds( "'РјР°Рј+Р°'" );
 
-	assertFails( "'мама" );
-	assertFails( "\"мама" );
+	assertFails( "'РјР°РјР°" );
+	assertFails( "\"РјР°РјР°" );
 }
 
 static void testLoops() {
@@ -105,7 +105,7 @@ static void testLoopAlternatives() {
 	assertBuilds( "AAA = { N | V }" );
 	assertBuilds( "AAA = { N | V }<1>" );
 	assertBuilds( "AAA = { N | V }<1,5>" );
-	assertBuilds( "AAA = { 'да' | 'нет' }" );
+	assertBuilds( "AAA = { 'РґР°' | 'РЅРµС‚' }" );
 }
 
 static void testParameters() {

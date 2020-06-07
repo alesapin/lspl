@@ -123,45 +123,45 @@ protected:
 class IndexedAttributeValueManager : public IndexedEntryManager {
 public:
 	IndexedAttributeValueManager() {
-		add( 0, "un", "undefined", "������������" );
+		add( 0, "un", "undefined", "неопределено" );
 
-		add( 1, "nom", "nominative", "������������" );
-		add( 2, "gen", "genitive", "�����������" );
-		add( 3, "dat", "dative", "���������" );
-		add( 4, "acc", "accusative", "�����������" );
-		add( 5, "ins", "instrumental", "������������" );
-		add( 6, "prep", "prepositional", "����������" );
-		add( 7, "uninf", "uninflected", "������������" );
+		add( 1, "nom", "nominative", "именительный" );
+		add( 2, "gen", "genitive", "родительный" );
+		add( 3, "dat", "dative", "дательный" );
+		add( 4, "acc", "accusative", "винительный" );
+		add( 5, "ins", "instrumental", "творительный" );
+		add( 6, "prep", "prepositional", "предложный" );
+		add( 7, "uninf", "uninflected", "несклоняемое" );
 
-		add( 8, "sing", "singular", "������������" );
-		add( 9, "plur", "plural", "�������������" );
+		add( 8, "sing", "singular", "единственное" );
+		add( 9, "plur", "plural", "множественное" );
 
-		add( 10, "masc", "masculine", "�������" );
-		add( 11, "fem", "feminine", "�������" );
-		add( 12, "neut", "neuter", "�������" );
+		add( 10, "masc", "masculine", "мужской" );
+		add( 11, "fem", "feminine", "женский" );
+		add( 12, "neut", "neuter", "средний" );
 
-		add( 13, "com", "comparative", "�������������" );
-		add( 14, "sup", "superlative", "������������" );
-		add( 15, "no", "no degree of comparsion", "��� ������� ���������" );
+		add( 13, "com", "comparative", "сравнительная" );
+		add( 14, "sup", "superlative", "превосходная" );
+		add( 15, "no", "no degree of comparsion", "без степени сравнения" );
 
-		add( 16, "pres", "present", "���������" );
-		add( 17, "past", "past", "���������" );
-		add( 18, "fut", "future", "�������" );
+		add( 16, "pres", "present", "настоящее" );
+		add( 17, "past", "past", "прошедшее" );
+		add( 18, "fut", "future", "будущее" );
 
-		add( 19, "anim", "animate", "������������" );
-		add( 20, "inan", "inanimate", "��������������" );
+		add( 19, "anim", "animate", "одушевленный" );
+		add( 20, "inan", "inanimate", "неодушелвенный" );
 
-		add( 21, "full", "full", "������" );
-		add( 22, "short", "short", "�����������" );
+		add( 21, "full", "full", "полная" );
+		add( 22, "short", "short", "сокращенная" );
 
 		add( 23, "ind", "indicative", "indicative" );
-		add( 24, "imp", "imperative", "������������" );
+		add( 24, "imp", "imperative", "императивное" );
 		add( 25, "conj", "conjunctive", "conjunctive" );
-		add( 26, "cond", "conditional", "��������" );
+		add( 26, "cond", "conditional", "условное" );
 
-		add( 27, "1", "first", "������" );
-		add( 28, "2", "second", "������" );
-		add( 29, "3", "third", "������" );
+		add( 27, "1", "first", "первое" );
+		add( 28, "2", "second", "второе" );
+		add( 29, "3", "third", "третье" );
 
 		add( 30, "yes", "reflexive", "reflexive" );
 		add( 31, "no", "not reflexive", "not reflexive" );
@@ -172,14 +172,14 @@ static StringManager stringAttributeValueManager;
 static IndexedAttributeValueManager indexedAttributeValueManager;
 
 /**
- * �������� ���������� ��������������� �������� ����������
+ * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  */
 uint AttributeValue::indexedCount() {
 	return indexedAttributeValueManager.map.size();
 }
 
 /**
- * ����� ��������������� �������� ��������� �� ��� ������������
+ * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  */
 AttributeValue AttributeValue::findIndexedByAbbrevation( const std::string & abbrevation ) {
 	IndexedAttributeValueManager::Iterator i = indexedAttributeValueManager.map.find( abbrevation );
@@ -191,7 +191,7 @@ AttributeValue AttributeValue::findIndexedByAbbrevation( const std::string & abb
 }
 
 /**
- * ���������������� ����� ��������������� �������� ���������
+ * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  */
 AttributeValue AttributeValue::createIndexed( const std::string & abbrevation, const std::string & name, const std::string & title ) {
 	return AttributeValue( indexedAttributeValueManager.add( indexedAttributeValueManager.map.size(), abbrevation, name, title ) );
@@ -200,19 +200,19 @@ AttributeValue AttributeValue::createIndexed( const std::string & abbrevation, c
 AttributeValue::AttributeValue(const std::string & str)
 	: type( AttributeType( AttributeType::STRING_ID ) ), value( reinterpret_cast<long>( &stringAttributeValueManager.intern( str ) ) ) {
 
-	stringAttributeValueManager.addRef( getString() ); // ����������� ���������� ������ ��� ������
+	stringAttributeValueManager.addRef( getString() ); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 }
 
 AttributeValue::AttributeValue( const AttributeValue & att )
 	: type( att.type ), value( att.value ) {
 
 	if ( type == AttributeType::STRING )
-		stringAttributeValueManager.addRef( getString() ); // ����������� ���������� ������ ��� ������
+		stringAttributeValueManager.addRef( getString() ); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 }
 
 AttributeValue::~AttributeValue() {
 	if ( type == AttributeType::STRING )
-		stringAttributeValueManager.release( getString() ); // ��������� ���������� ������� ��� ������
+		stringAttributeValueManager.release( getString() ); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 }
 
 const std::string & AttributeValue::getAbbrevation() const {

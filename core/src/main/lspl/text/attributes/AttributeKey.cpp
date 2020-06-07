@@ -8,20 +8,20 @@ namespace lspl { namespace text { namespace attributes {
 class IndexedAttributeKeyManager : public IndexedEntryManager {
 public:
 	IndexedAttributeKeyManager() {
-		add( 0, "un", "undefined", "неопределено" );
-		add( 1, "c", "case", "падеж" );
-		add( 2, "n", "number", "число" );
-		add( 3, "g", "gender", "род" );
-		add( 4, "doc", "degree of comparsion", "степень сравнения" );
-		add( 5, "t", "tense", "время" );
-		add( 6, "a", "animate", "одушевленность" );
-		add( 7, "f", "form", "форма" );
-		add( 8, "m", "mode", "наклонение" );
-		add( 9, "p", "person", "лицо" );
-		add( 10, "r", "reflexive", "неопределено" );
-		add( 11, "b", "base", "начальная форма" );
-		add( 12, "x", "text", "текст" );
-		add( 13, "st", "stem", "основа" );
+		add( 0, "un", "undefined", "РЅРµРѕРїСЂРµРґРµР»РµРЅРѕ" );
+		add( 1, "c", "case", "РїР°РґРµР¶" );
+		add( 2, "n", "number", "С‡РёСЃР»Рѕ" );
+		add( 3, "g", "gender", "СЂРѕРґ" );
+		add( 4, "doc", "degree of comparsion", "СЃС‚РµРїРµРЅСЊ СЃСЂР°РІРЅРµРЅРёСЏ" );
+		add( 5, "t", "tense", "РІСЂРµРјСЏ" );
+		add( 6, "a", "animate", "РѕРґСѓС€РµРІР»РµРЅРЅРѕСЃС‚СЊ" );
+		add( 7, "f", "form", "С„РѕСЂРјР°" );
+		add( 8, "m", "mode", "РЅР°РєР»РѕРЅРµРЅРёРµ" );
+		add( 9, "p", "person", "Р»РёС†Рѕ" );
+		add( 10, "r", "reflexive", "РЅРµРѕРїСЂРµРґРµР»РµРЅРѕ" );
+		add( 11, "b", "base", "РЅР°С‡Р°Р»СЊРЅР°СЏ С„РѕСЂРјР°" );
+		add( 12, "x", "text", "С‚РµРєСЃС‚" );
+		add( 13, "st", "stem", "РѕСЃРЅРѕРІР°" );
 	};
 };
 
@@ -44,14 +44,14 @@ const AttributeKey AttributeKey::TEXT = AttributeKey( 12 );
 const AttributeKey AttributeKey::STEM = AttributeKey( 13 );
 
 /**
- * Получить общее количество зарегистрированных аттрибутов
+ * РџРѕР»СѓС‡РёС‚СЊ РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅС‹С… Р°С‚С‚СЂРёР±СѓС‚РѕРІ
  */
 uint AttributeKey::count() {
 	return indexedAttributeKeyManager.map.size();
 }
 
 /**
- * Найти аттрибут по его аббревиатуре
+ * РќР°Р№С‚Рё Р°С‚С‚СЂРёР±СѓС‚ РїРѕ РµРіРѕ Р°Р±Р±СЂРµРІРёР°С‚СѓСЂРµ
  */
 AttributeKey AttributeKey::findByAbbrevation( const std::string & abbrevation ) {
 	auto i = indexedAttributeKeyManager.map.get<0>().find( abbrevation );
@@ -63,7 +63,7 @@ AttributeKey AttributeKey::findByAbbrevation( const std::string & abbrevation ) 
 }
 
 /**
- * Найти аттрибут по его имени
+ * РќР°Р№С‚Рё Р°С‚С‚СЂРёР±СѓС‚ РїРѕ РµРіРѕ РёРјРµРЅРё
  */
 AttributeKey AttributeKey::findByName( const std::string & name ) {
 	auto i = indexedAttributeKeyManager.map.get<1>().find( name );
@@ -75,7 +75,7 @@ AttributeKey AttributeKey::findByName( const std::string & name ) {
 }
 
 /**
- * Зарегистрировать новый аттрибут
+ * Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊ РЅРѕРІС‹Р№ Р°С‚С‚СЂРёР±СѓС‚
  */
 AttributeKey AttributeKey::create( const std::string & abbrevation, const std::string & name, const std::string & title ) {
 	return AttributeKey( indexedAttributeKeyManager.add( indexedAttributeKeyManager.map.size(), abbrevation, name, title ) );

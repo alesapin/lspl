@@ -7,7 +7,7 @@ namespace graphan {
 
 static Unit * tokenToUnit(X::TokenPtr token) {
     Unit::Type result_type = Unit::Type::UNKNOWN;
-    if (token->getType() == X::TokenTypeTag::PNCT)
+    if (token->getType() == X::TokenTypeTag::PNCT || token->getType() == X::TokenTypeTag::SEPR)
         result_type = Unit::Type::PUNCT;
     else if (token->getType() == X::TokenTypeTag::WORD ||
              token->getType() == X::TokenTypeTag::WRNM)

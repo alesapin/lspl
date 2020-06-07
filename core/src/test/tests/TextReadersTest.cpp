@@ -43,7 +43,7 @@ void assertBuilds( const char * text ) {
 static void testTextReaders() {
 	assertLoadsJson( "resources/test/text1.js" );
 
-	assertBuilds( "Мама мыла раму" );
+	assertBuilds( "РњР°РјР° РјС‹Р»Р° СЂР°РјСѓ" );
 }
 
 cute::suite textReadersSuite() {
