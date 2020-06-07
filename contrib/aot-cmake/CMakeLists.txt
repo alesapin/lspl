@@ -7,3 +7,5 @@ add_custom_target(aot_bundle
   ${CMAKE_SOURCE_DIR}/contrib/aot/Source/StructDictLib/libStructDictrst.a
   ${CMAKE_SOURCE_DIR}/contrib/aot/Source/MorphWizardLib/libMorphWizardrst.a
   ${CMAKE_SOURCE_DIR}/contrib/aot/Source/AgramtabLib/libAgramtabrst.a)
+
+file(COPY ${AOT_SOURCE_DIR} DESTINATION ${CMAKE_BINARY_DIR})
