@@ -8,7 +8,7 @@ lib_pathes := $(subst ..,-L..,$(subst lib, -l,$(libs)))
 # we have to use "--start-group --end-group" in order to solve cross-references
 
 ifeq ($(link_pcre),1)
-	pcre_libs := -L../../../pcre -lpcrecpp -L../../../pcre -lpcre
+	pcre_libs := -L../../../pcre -lpcrecpp -L../../../pcre -lpcre -lpthread
 endif
 
 
