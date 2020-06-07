@@ -241,7 +241,6 @@ public:
         	/*
         	 * Парсеры ограничений
         	 */
-
         	matcherRestriction = ( localExpression[ add( matcherRestriction.args, arg1 ) ] >> *( '=' >> expression[ add( matcherRestriction.args, arg1 ) ] ) )
 				[ matcherRestriction.restriction = createAgreementRestriction( matcherRestriction.args ) ];
 

@@ -135,47 +135,59 @@ struct TagAndBit
     GramemeBits bit;
 };
 
-static const std::map<XTag, TagAndBit> TAG_MAPPING = {
-    {XTag::UNKN, {LTag::UNDEFINED, GramemeBits::rUnkn}},
-    {XTag::Nom, {LTag::NOMINATIVE, GramemeBits::rNominativ}},
-    {XTag::Gen, {LTag::GENITIVE, GramemeBits::rGenitiv}},
-    {XTag::Dat, {LTag::DATIVE, GramemeBits::rDativ}},
-    {XTag::Acc, {LTag::ACCUSATIVE, GramemeBits::rAccusativ}},
-    {XTag::Ins, {LTag::INSTRUMENTAL, GramemeBits::rInstrumentalis}},
-    {XTag::Voc, {LTag::GENITIVE, GramemeBits::rVocativ}},
-    {XTag::Loc, {LTag::PREPOSITIONAL, GramemeBits::rLocativ}},
-    {XTag::Sing, {LTag::SINGULAR, GramemeBits::rSingular}},
-    {XTag::Plur, {LTag::PLURAL, GramemeBits::rPlural}},
-    {XTag::Masc, {LTag::MASCULINE, GramemeBits::rMasculinum}},
-    {XTag::Fem, {LTag::FEMININE, GramemeBits::rFeminum}},
-    {XTag::Neut, {LTag::NEUTER, GramemeBits::rNeutrum}},
-    {XTag::Cmp, {LTag::COMPARATIVE, GramemeBits::rComparative}},
-    {XTag::Sup, {LTag::SUPERLATIVE, GramemeBits::rSuperlative}},
-    {XTag::Pres, {LTag::PRESENT, GramemeBits::rPresentTense}},
-    {XTag::Past, {LTag::PAST, GramemeBits::rPastTense}},
-    {XTag::Fut, {LTag::FUTURE, GramemeBits::rFutureTense}},
-    {XTag::Anim, {LTag::ANIMATE, GramemeBits::rAnimative}},
-    {XTag::Inan, {LTag::INANIMATE, GramemeBits::rNonAnimative}},
-    {XTag::Short, {LTag::SHORT, GramemeBits::rShort}},
-    {XTag::Ind, {LTag::INDICATIVE, GramemeBits::rIndicative}},
-    {XTag::Imp, {LTag::IMPERATIVE, GramemeBits::rImperative}},
-    {XTag::_1, {LTag::FIRST, GramemeBits::rFirstPerson}},
-    {XTag::_2, {LTag::SECOND, GramemeBits::rSecondPerson}},
-    {XTag::_3, {LTag::THIRD, GramemeBits::rThirdPerson}},
-};
 
 uint64 getTagSet(const X::MorphInfo & mi)
 {
+    static const std::map<XTag, TagAndBit> TAG_MAPPING = {
+        {XTag::UNKN, {LTag::UNDEFINED, GramemeBits::rUnkn}},
+        {XTag::Nom, {LTag::NOMINATIVE, GramemeBits::rNominativ}},
+        {XTag::Gen, {LTag::GENITIVE, GramemeBits::rGenitiv}},
+        {XTag::Dat, {LTag::DATIVE, GramemeBits::rDativ}},
+        {XTag::Acc, {LTag::ACCUSATIVE, GramemeBits::rAccusativ}},
+        {XTag::Ins, {LTag::INSTRUMENTAL, GramemeBits::rInstrumentalis}},
+        {XTag::Voc, {LTag::GENITIVE, GramemeBits::rVocativ}},
+        {XTag::Loc, {LTag::PREPOSITIONAL, GramemeBits::rLocativ}},
+        {XTag::Sing, {LTag::SINGULAR, GramemeBits::rSingular}},
+        {XTag::Plur, {LTag::PLURAL, GramemeBits::rPlural}},
+        {XTag::Masc, {LTag::MASCULINE, GramemeBits::rMasculinum}},
+        {XTag::Fem, {LTag::FEMININE, GramemeBits::rFeminum}},
+        {XTag::Neut, {LTag::NEUTER, GramemeBits::rNeutrum}},
+        {XTag::Cmp, {LTag::COMPARATIVE, GramemeBits::rComparative}},
+        {XTag::Sup, {LTag::SUPERLATIVE, GramemeBits::rSuperlative}},
+        {XTag::Pres, {LTag::PRESENT, GramemeBits::rPresentTense}},
+        {XTag::Past, {LTag::PAST, GramemeBits::rPastTense}},
+        {XTag::Fut, {LTag::FUTURE, GramemeBits::rFutureTense}},
+        {XTag::Anim, {LTag::ANIMATE, GramemeBits::rAnimative}},
+        {XTag::Inan, {LTag::INANIMATE, GramemeBits::rNonAnimative}},
+        {XTag::Short, {LTag::SHORT, GramemeBits::rShort}},
+        {XTag::Ind, {LTag::INDICATIVE, GramemeBits::rIndicative}},
+        {XTag::Imp, {LTag::IMPERATIVE, GramemeBits::rImperative}},
+        {XTag::_1, {LTag::FIRST, GramemeBits::rFirstPerson}},
+        {XTag::_2, {LTag::SECOND, GramemeBits::rSecondPerson}},
+        {XTag::_3, {LTag::THIRD, GramemeBits::rThirdPerson}},
+    };
+
     uint64 result{};
+    //std::cerr << "RECEIVING TAG\n";
     for (auto itr = XTag::begin(); itr != XTag::end(); ++itr)
     {
         const auto & current_tag = *itr;
-        if (current_tag & mi.tag && TAG_MAPPING.count(current_tag))
+        //std::cerr << "CURRENT TAG:" << current_tag<< std::endl;
+        //std::cerr << "MI TAG:" << mi.tag << std::endl;
+        if (current_tag == XTag::UNKN)
+            continue;
+        //std::cerr << "TRYING TO CHECK:" << mi.tag.contains(current_tag)
+        //          << std::endl;
+        if (mi.tag.contains(current_tag) && TAG_MAPPING.count(current_tag))
         {
             uint64_t bit = static_cast<uint64_t>(TAG_MAPPING.at(current_tag).bit);
+            //std::cerr << "FROM:" << current_tag << std::endl;
+            //std::cerr << "BUILDING ATTR:" << TAG_MAPPING.at(current_tag).tag.getName()
+            //             << std::endl;
             result |= (1UL << bit);
         }
     }
+    //std::cerr << "RECEIVED:" << result << std::endl;
     return result;
 }
 
@@ -215,7 +227,7 @@ void XmorphyMorphology::appendWordForms(
 
     for (const auto & morph_info : word_form->getMorphInfo())
     {
-        // std::cerr << "SP SOURCE:" << morph_info.sp << std::endl;
+        //std::cerr << "SP SOURCE:" << morph_info.sp << std::endl;
         auto sp = getSpeechPart(word_form, morph_info);
         //std::cerr << "TAG:" << morph_info.tag << std::endl;
         uint64 *tag_sets = new uint64[1];

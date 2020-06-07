@@ -8,6 +8,6 @@
 #ifndef _LSPL_UTILS_RUSCONSTS_H_
 #define _LSPL_UTILS_RUSCONSTS_H_
 
-#define RUS_ALPHA "�-��-�"
+#define RUS_ALPHA "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
 
 #endif /* _LSPL_UTILS_RUSCONSTS_H_ */
