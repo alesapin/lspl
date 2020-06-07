@@ -20,6 +20,7 @@ set(LSPL_CORE_SOURCES
     src/main/lspl/morphology/WordForm.cpp
     src/main/lspl/morphology/Morphology.cpp
     src/main/lspl/morphology/AotMorphology.cpp
+    src/main/lspl/morphology/XmorphyMorphology.cpp
 
     src/main/lspl/patterns/Alternative.cpp
     src/main/lspl/patterns/matchers/Context.cpp

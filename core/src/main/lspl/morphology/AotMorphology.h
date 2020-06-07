@@ -28,7 +28,7 @@ public:
 
 	uint64 getAttributes( const char * gramCode );
 
-	std::string getAttributesString( uint64 attValues );
+    //	std::string getAttributesString( uint64 attValues );
 
 	bool getParadigm(std::string word, std::vector<CFormInfo> &form);
 	int getSP(const char *code) const;

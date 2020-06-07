@@ -169,14 +169,14 @@ uint64 AotMorphology::getAttributes( const char * gramCode ) {
 	return result;
 }
 
-std::string AotMorphology::getAttributesString( uint64 values ) {
-	std::string s = agramtab->GrammemsToStr( values );
-
-	if (!s.empty() && (s[s.length() -1] == ','))
-			s.erase(s.length() - 1);
-
-	return s;
-}
+//std::string AotMorphology::getAttributesString( uint64 values ) {
+//	std::string s = agramtab->GrammemsToStr( values );
+//
+//	if (!s.empty() && (s[s.length() -1] == ','))
+//			s.erase(s.length() - 1);
+//
+//	return s;
+//}
 
 std::string AotMorphology::upcase( const char * str ) {
 	std::string word( str );

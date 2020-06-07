@@ -9,6 +9,8 @@
 
 #include "AotMorphology.h"
 
+#include "XmorphyMorphology.h"
+
 #include <AgramtabLib/rus_consts.h>
 
 using namespace lspl::text::attributes;
@@ -65,9 +67,9 @@ AttributeValue Morphology::extractAttributeValue( uint64 attributeSet, Attribute
 			{ AttributeValue::ANIMATE, AttributeValue::INANIMATE }
 		},
 		{ // Форма
-			0,
-			{},
-			{}
+			1,
+			{51},
+			{ AttributeValue::SHORT }
 		},
 		{
 			1,
@@ -100,7 +102,7 @@ AttributeValue Morphology::extractAttributeValue( uint64 attributeSet, Attribute
 
 Morphology & Morphology::instance() {
 	if ( !singletonInstance)
-		singletonInstance = new AotMorphology();
+		singletonInstance = new XmorphyMorphology();
 
 	return *singletonInstance;
 }

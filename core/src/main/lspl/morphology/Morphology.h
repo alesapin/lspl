@@ -57,7 +57,7 @@ public:
 		return result.release();
 	}
 
-	virtual std::string getAttributesString( uint64 attValues ) = 0;
+//virtual std::string getAttributesString( uint64 attValues ) = 0;
 
 	std::string upcase( const std::string & str ) { return upcase( str.c_str() ); }
 	virtual std::string upcase( const char * str ) = 0;

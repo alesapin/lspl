@@ -26,8 +26,9 @@ namespace lspl { namespace assertions {
 void assertMatchesImpl( const NamespaceRef & ns, const char * textSource, uint from, uint to, const char * patternSource, char const *file, int line ) {
 	PatternRef pattern = buildPatternImpl( ns, patternSource, file, line );
 	TextRef text = buildTextImpl( textSource, file, line );
+    std::cerr << "TEXT:" << text->getContent() << std::endl;
 
-	const MatchList & matches = text->getMatches( pattern );
+	const MatchList & matches = text->getMatches(pattern);
 
 	if ( matches.size() == 0 )
 		throw cute::test_failure( ( boost::format( "No matches for pattern '%1%' in text '%2%'" ) % patternSource % textSource ).str(), file, line);

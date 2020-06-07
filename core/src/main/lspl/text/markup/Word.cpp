@@ -29,13 +29,13 @@ void Word::dump( std::ostream & out, std::string tabs ) const {
 		<< ", base = " << base
 		<< ", stem = " << stem
 		<< ", speechPart = " << speechPart.getAbbrevation()
-		<< ", attributes = " << getAttributesString()
+		//<< ", attributes = " << getAttributesString()
 		<< ", case = " << getCase().getName() << " }";
 }
 
-std::string Word::getAttributesString() const {
-	return Morphology::instance().getAttributesString( attributes );
-}
+//std::string Word::getAttributesString() const {
+//	return Morphology::instance().getAttributesString( attributes );
+//}
 
 attributes::AttributeValue Word::getAttribute( attributes::AttributeKey key ) const {
 	if ( key == AttributeKey::BASE ) // Если запрашиваемый аттрибут - начальная форма слова

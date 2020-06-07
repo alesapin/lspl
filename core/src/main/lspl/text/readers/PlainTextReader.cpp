@@ -54,7 +54,7 @@ TextRef PlainTextReader::readFromString( const std::string & content ) {
 	const graphan::Unit * lastUnit = 0;
 	uint lastUnitEnd = 0;
 
-	for (size_t unitIndex = 1; unitIndex < units.size(); ++unitIndex) { // Пробегаем все строки графематической таблицы
+	for (size_t unitIndex = 0; unitIndex < units.size(); ++unitIndex) { // Пробегаем все строки графематической таблицы
 		const graphan::Unit & unit = units[ unitIndex ]; // Извлекаем текущую лексема
 
 		if ( unit.getType() == graphan::Unit::WORD || ( unit.getType() == graphan::Unit::PUNCT && config.analyzePunctuation ) ) {

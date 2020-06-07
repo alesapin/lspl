@@ -22,9 +22,9 @@ public:
 	/**
 	 * Получить значение аттрибута слова
 	 */
-	virtual attributes::AttributeValue getAttribute( attributes::AttributeKey type ) const;
+    virtual attributes::AttributeValue getAttribute( attributes::AttributeKey type ) const;
 
-	std::string getAttributesString() const;
+	//std::string getAttributesString() const;
 
 	attributes::AttributeValue getCase() const { return getAttribute(attributes::AttributeKey::CASE); }
 	attributes::AttributeValue getNumber() const { return getAttribute(attributes::AttributeKey::NUMBER); }
