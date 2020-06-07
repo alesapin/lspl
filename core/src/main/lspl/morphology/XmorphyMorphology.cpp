@@ -168,26 +168,17 @@ uint64 getTagSet(const X::MorphInfo & mi)
     };
 
     uint64 result{};
-    //std::cerr << "RECEIVING TAG\n";
     for (auto itr = XTag::begin(); itr != XTag::end(); ++itr)
     {
         const auto & current_tag = *itr;
-        //std::cerr << "CURRENT TAG:" << current_tag<< std::endl;
-        //std::cerr << "MI TAG:" << mi.tag << std::endl;
         if (current_tag == XTag::UNKN)
             continue;
-        //std::cerr << "TRYING TO CHECK:" << mi.tag.contains(current_tag)
-        //          << std::endl;
         if (mi.tag.contains(current_tag) && TAG_MAPPING.count(current_tag))
         {
             uint64_t bit = static_cast<uint64_t>(TAG_MAPPING.at(current_tag).bit);
-            //std::cerr << "FROM:" << current_tag << std::endl;
-            //std::cerr << "BUILDING ATTR:" << TAG_MAPPING.at(current_tag).tag.getName()
-            //             << std::endl;
             result |= (1UL << bit);
         }
     }
-    //std::cerr << "RECEIVED:" << result << std::endl;
     return result;
 }
 
@@ -220,21 +211,16 @@ std::string XmorphyMorphology::lowcase(const char *start, const char *end) {
 void XmorphyMorphology::appendWordForms(
     const std::string &token, boost::ptr_vector<WordForm> &forms) {
 
-    //std::cerr << "TOKEN:" << token << std::endl;
     utils::UniString word(token);
     auto token_ptr = tokenizer.analyzeSingleWord(word);
     auto word_form = analyzer.analyzeSingleToken(token_ptr);
 
     for (const auto & morph_info : word_form->getMorphInfo())
     {
-        //std::cerr << "SP SOURCE:" << morph_info.sp << std::endl;
         auto sp = getSpeechPart(word_form, morph_info);
-        //std::cerr << "TAG:" << morph_info.tag << std::endl;
         uint64 *tag_sets = new uint64[1];
         tag_sets[0] = getTagSet(morph_info);
         const utils::UniString & nf = morph_info.normalForm;
-        //std::cerr << "NF:" << nf << std::endl;
-        //std::cerr << "SP RESULT:" << sp.getName() << std::endl;
         utils::UniString stem = nf.subString(0, morph_info.stemLen);
         forms.push_back(new WordForm(sp, nf.getRawString(), stem.getRawString(), tag_sets, 1));
     }
