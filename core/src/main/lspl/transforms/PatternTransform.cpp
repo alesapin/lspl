@@ -35,7 +35,6 @@
 #include <common/utilit.h>
 
 #include "../morphology/Morphology.h"
-#include "../morphology/AotMorphology.h"
 
 using lspl::text::markup::Word;
 using lspl::text::markup::Token;

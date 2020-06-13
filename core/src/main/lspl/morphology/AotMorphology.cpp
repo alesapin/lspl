@@ -2,7 +2,7 @@
  * AotMorphology.cpp
  *
  *  Created on: Dec 24, 2008
- *      Author: alno
+ *	  Author: alno
  */
 
 #include "../base/BaseInternal.h"
@@ -177,6 +177,12 @@ uint64 AotMorphology::getAttributes( const char * gramCode ) {
 //
 //	return s;
 //}
+
+std::unique_ptr<WordForm> AotMorphology::synthesize(
+	const std::string &token, text::attributes::SpeechPart requiredSpeechPart,
+	uint64 requiredAttributesBits, std::string &formText) {
+  return nullptr;
+}
 
 std::string AotMorphology::upcase( const char * str ) {
 	std::string word( str );

@@ -364,9 +364,10 @@ void TextTransform::buildStr( TextTransformResult & result, const MatchVariant &
 
 			for(ConstIterator it=val.first; it!=val.second; ++it) {
 				const Word * word = dynamic_cast<const Word*>( &*it->second );
-				if(!word)
+				if (!word)
 					continue;
-				unsigned int &outAttributes=attributes.insert(AttributesPair(word, 0)).first->second;
+
+				unsigned int &outAttributes = attributes.insert(AttributesPair(word, 0)).first->second;
 
 				//нет правил преобразования слова
 				if(!outAttributes) {
@@ -379,134 +380,24 @@ void TextTransform::buildStr( TextTransformResult & result, const MatchVariant &
 					continue;
 				}
 
-				lspl::morphology::AotMorphology *aot=dynamic_cast<lspl::morphology::AotMorphology*>(&morphology::Morphology::instance());
-				std::vector<CFormInfo> res;
-				if(!aot->getParadigm(word->getToken(), res))
-					continue;
+				std::string formText;
+				auto requiredForm = morphology::Morphology::instance().synthesize(word->getToken(), word->getSpeechPart(), outAttributes, formText);
 
-				unsigned int sourceGrammem=0, targetGrammem=0, sGrammem=0;
-				unsigned long long tmpGrammem=0;
-				CFormInfo *f;
-
-				//взять часть речи слова
-				int posflag=0;
-				for ( uint i = 0; i < res.size(); ++ i) {
-					f = &res[i];
-					if(SpeechPartTable[aot->getSP(f->GetSrcAncode().c_str())] != word->getSpeechPart().id)
-						continue;
-
-					posflag=1;
-
-					//найти в словаре номер слова атирбутами, не противоречащами заданным
-					int attrNum;
-					outAttributes &= 0xFFFFFFFE;
-					//цикл по всем словоформам из полученной парадигмы
-					for ( attrNum = 0; attrNum < f->GetCount(); ++ attrNum) {
-						int aotsp=aot->getSP(f->GetAncode(attrNum).c_str());
-						if( SpeechPartTable[aotsp] != word->getSpeechPart().id)
-							continue;
-						//получить атрибуты АОТа
-						tmpGrammem = aot->getAttributes(f->GetAncode(attrNum).c_str());
-						//построить бит-маску для очередного слова из АОТа
-						sGrammem = 	(((tmpGrammem >> 2) & 1) << 1) |
-									(((tmpGrammem >> 3) & 1) << 2) |
-									(((tmpGrammem >> 4) & 1) << 3) |
-									(((tmpGrammem >> 5) & 1) << 4) |
-									(((tmpGrammem >> 6) & 1) << 5) |
-									(((tmpGrammem >> 7) & 1) << 6) |
-//									(((tmpGrammem >> 8) & 1) << 7) |
-
-									(((tmpGrammem >> 1) & 1) << 8) |
-									(((tmpGrammem >> 0) & 1) << 9) |
-
-									(((tmpGrammem >> 9) & 1) << 10) |
-									(((tmpGrammem >> 10) & 1) << 11) |
-									(((tmpGrammem >> 11) & 1) << 12) |
-
-									(((tmpGrammem >> 22) & 1) << 13) |
-									(((tmpGrammem >> 49) & 1) << 14) |
-									//для прилагательных/причастий принудительно отметить, что нет степени сравнения
-									(((aotsp==1) | (aotsp==17) | (aotsp==18) | (aotsp==20))?(((((tmpGrammem >> 22) & 1) | ((tmpGrammem >> 49) & 1))?0:1) << 15):0) |
-
-									(((tmpGrammem >> 13) & 1) << 16) |
-									(((tmpGrammem >> 15) & 1) << 17) |
-									(((tmpGrammem >> 14) & 1) << 18) |
-
-									(((tmpGrammem >> 20) & 1) << 19) |
-									(((tmpGrammem >> 21) & 1) << 20) |
-
-									//полная/краткая форма прилагательных/причастий различается в части речи
-									(((aotsp == 1 || aotsp == 18)?1:0) << 21) |
-									(((aotsp == 17 || aotsp == 20)?1:0) << 22) |
-
-//									(((tmpGrammem >> 13) & 1) << 23) |
-//									(((tmpGrammem >> 15) & 1) << 24) |
-//									(((tmpGrammem >> 14) & 1) << 25) |
-//									(((tmpGrammem >> 13) & 1) << 26) |
-
-									(((tmpGrammem >> 16) & 1) << 27) |
-									(((tmpGrammem >> 17) & 1) << 28) |
-									(((tmpGrammem >> 18) & 1) << 29)
-
-//									(((tmpGrammem >> 15) & 1) << 30) |
-//									(((tmpGrammem >> 14) & 1) << 31)
-									;
-
-						if(aotsp == 21) {
-							if(outAttributes == sGrammem)
-								break;
-							else
-								continue;
-						}
-						//сравнить атрибуты слов. атрибут сравнивается только если он имеется у обоих словоформ, иначе он игнорируется
-						unsigned int tmp=0;
-						for(uint id=1; id<=10; id++) {
-							unsigned int tmp1=outAttributes & ~GrammemClear[id];
-							unsigned int tmp2=sGrammem & ~GrammemClear[id];
-							tmp |= ( !tmp1 || !tmp2 )?(0):((tmp1 ^ (tmp2 & tmp1)) );
-						}
-						if( !tmp )
-							break;
-					}
-
-					//если нашли слово с требемыми атрибутами, то дописать к результату это слово
-					if( attrNum < f->GetCount() ) {
-						if ( result.text.length() > 0 ) {
-							result.text += " ";
-							result.pos += " ";
-						}
-						result.text += f->GetWordForm( attrNum );
-						result.pos += word->getSpeechPart().getAbbrevation();
-						posflag=2;
-						break;
-					}
-
-				}
-
-				if(posflag==2) {
-					continue;
-				}
-
-				//ошибка, нужная часть речи для слова не найдена в АОТе, вернуть слово как в тексте
-				if(!posflag) {
+				if( requiredForm != nullptr ) {
 					if ( result.text.length() > 0 ) {
 						result.text += " ";
 						result.pos += " ";
 					}
-					result.text += /*"POSerror " +*/ word->getToken();
+					result.text += formText;
 					result.pos += word->getSpeechPart().getAbbrevation();
-					continue;
+				} else {
+					if (result.text.length() > 0) {
+						result.text += " ";
+						result.pos += " ";
+					}
+					result.text += word->getToken();
+					result.pos += word->getSpeechPart().getAbbrevation();
 				}
-
-
-				//ошибка, нужная форма слова не найдена в АОТе, вернуть слово как в тексте
-				if ( result.text.length() > 0 ) {
-					result.text += " ";
-					result.pos += " ";
-				}
-				result.text += /*"WFerror " +*/ word->getToken();
-				result.pos += word->getSpeechPart().getAbbrevation();
-
 			}
 		} else
 		//шаблон

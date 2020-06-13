@@ -14,7 +14,6 @@ using XSpeechPart = X::UniSPTag;
 
 namespace {
 
-
 LSpeechPart getSpeechPart(const X::WordFormPtr & word_form, const X::MorphInfo & info)
 {
   static const std::map<XSpeechPart, LSpeechPart> SP_MAPPING = {
@@ -37,9 +36,6 @@ LSpeechPart getSpeechPart(const X::WordFormPtr & word_form, const X::MorphInfo &
     } else if (word_form->getType() == X::TokenTypeTag::NUMB) {
         return LSpeechPart::NUMERAL;
     }
-    //std::cerr << "SEARCHING FOR:" << info.sp << std::endl;
-    //std::cerr << "SPSIZE:" << SP_MAPPING.size() << std::endl;
-    //std::cerr << "COUNT:" << SP_MAPPING.count(info.sp) << std::endl;
     return SP_MAPPING.at(info.sp);
 }
 
@@ -135,8 +131,7 @@ struct TagAndBit
     GramemeBits bit;
 };
 
-
-uint64 getTagSet(const X::MorphInfo & mi)
+uint64 getLSPLTagSet(const X::MorphInfo & mi)
 {
     static const std::map<XTag, TagAndBit> TAG_MAPPING = {
         {XTag::UNKN, {LTag::UNDEFINED, GramemeBits::rUnkn}},
@@ -182,7 +177,43 @@ uint64 getTagSet(const X::MorphInfo & mi)
     return result;
 }
 
+XTag getXmorphyTagSet(const uint64 lspl_tags)
+{
+    std::unordered_map<uint64, XTag> REVERSE_MAPPING = {
+        {0, XTag::UNKN},
+        {1, XTag::Nom},
+        {2, XTag::Gen},
+        {3, XTag::Dat},
+        {4, XTag::Acc},
+        {5, XTag::Ins},
+        {6, XTag::Loc},
+        {8, XTag::Sing},
+        {9, XTag::Plur},
+        {10, XTag::Masc},
+        {11, XTag::Fem},
+        {12, XTag::Neut},
+        {13, XTag::Cmp},
+        {14, XTag::Sup},
+        {16, XTag::Pres},
+        {17, XTag::Past},
+        {18, XTag::Fut},
+        {19, XTag::Anim},
+        {20, XTag::Inan},
+        {22, XTag::Short},
+        {23, XTag::Ind},
+        {24, XTag::Imp},
+        {27, XTag::_1},
+        {28, XTag::_2},
+        {29, XTag::_3}};
+    XTag result;
+    std::bitset<sizeof(lspl_tags)> tags(lspl_tags);
+    for (size_t i = 0; i < sizeof(lspl_tags); ++i) {
+      if (tags[i] && REVERSE_MAPPING.count(i))
+        result |= REVERSE_MAPPING[i];
+    }
+    return result;
 }
+} // namespace
 
 std::string XmorphyMorphology::upcase(const char *str) {
     utils::UniString tmpstr(str);
@@ -219,11 +250,36 @@ void XmorphyMorphology::appendWordForms(
     {
         auto sp = getSpeechPart(word_form, morph_info);
         uint64 *tag_sets = new uint64[1];
-        tag_sets[0] = getTagSet(morph_info);
+        tag_sets[0] = getLSPLTagSet(morph_info);
         const utils::UniString & nf = morph_info.normalForm;
         utils::UniString stem = nf.subString(0, morph_info.stemLen);
         forms.push_back(new WordForm(sp, nf.getRawString(), stem.getRawString(), tag_sets, 1));
     }
+}
+
+std::unique_ptr<WordForm> XmorphyMorphology::synthesize(
+    const std::string &token, text::attributes::SpeechPart requiredSpeechPart,
+    uint64 requiredAttributesBits, std::string &formText) {
+
+  auto tag = getXmorphyTagSet(requiredAttributesBits);
+  auto result = analyzer.synthesize(utils::UniString(token), tag);
+
+  for (size_t i = 0; i < result.size(); ++i) {
+    for (const auto &morph_info : result[i]->getMorphInfo()) {
+      auto sp = getSpeechPart(result[i], morph_info);
+      if (sp == requiredSpeechPart) {
+        uint64 *tag_sets = new uint64[1];
+        tag_sets[0] = getLSPLTagSet(morph_info);
+        const utils::UniString &nf = morph_info.normalForm;
+        utils::UniString stem = nf.subString(0, morph_info.stemLen);
+        formText = result[i]->getWordForm().getRawString();
+        return std::make_unique<WordForm>(sp, nf.getRawString(),
+                                          stem.getRawString(), tag_sets, 1);
+      }
+    }
+  }
+
+  return nullptr;
 }
 }
 }

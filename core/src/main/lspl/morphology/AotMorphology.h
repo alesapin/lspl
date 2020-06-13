@@ -2,7 +2,7 @@
  * AotMorphology.h
  *
  *  Created on: Dec 24, 2008
- *      Author: alno
+ *	  Author: alno
  */
 
 #ifndef _LSPL_MORPHOLOGY_AOTMORPHOLOGY_H_
@@ -24,15 +24,15 @@ public:
 
 	void appendWordForms( const std::string & token, boost::ptr_vector<WordForm> & forms );
 
+	std::unique_ptr<WordForm> synthesize(const std::string &token, text::attributes::SpeechPart requiredSpeechPart, uint64 requiredAttributesBits, std::string & formText) override;
+
 	text::attributes::SpeechPart getSpeechPart( const char * gramCode );
 
 	uint64 getAttributes( const char * gramCode );
 
-    //	std::string getAttributesString( uint64 attValues );
-
 	bool getParadigm(std::string word, std::vector<CFormInfo> &form);
 	int getSP(const char *code) const;
-	
+
 	std::string upcase( const char * str );
 	std::string upcase( const char * start, const char * end );
 

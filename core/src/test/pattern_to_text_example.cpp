@@ -30,6 +30,5 @@ int main(int argc, char** argv) {
 	for(int i=0; i<matches.size(); i++) {
 		cout<<matches[i]->getVariants().at(0)->getTransformResult<std::string>()<<endl;
 	}
-				
 	return 0;
 }

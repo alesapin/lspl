@@ -3,7 +3,9 @@
 
 #include "../base/Base.h"
 #include "../base/Exception.h"
+#include "../text/attributes/SpeechPart.h"
 
+#include <memory>
 #include "WordForm.h"
 
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -45,7 +47,11 @@ public:
 	 */
 	virtual void appendWordForms( const std::string & token, boost::ptr_vector<WordForm> & forms ) = 0;
 
-	/**
+	virtual std::unique_ptr<WordForm> synthesize(const std::string &token,
+							text::attributes::SpeechPart requiredSpeechPart,
+		uint64 requiredAttributesBits, std::string & formText) = 0;
+
+		/**
 	 * Провести морфологический анализ и получить различные интерпретации слова.
 	 *
 	 * @param token слово для анализа
