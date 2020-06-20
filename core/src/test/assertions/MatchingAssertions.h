@@ -32,6 +32,7 @@
 #define buildText(text) lspl::assertions::buildTextImpl(text,__FILE__,__LINE__)
 
 #define assertRightPart(text,pattern,expected) lspl::assertions::assertRightPartImpl(new lspl::Namespace(),text,pattern,expected,__FILE__,__LINE__);
+#define assertRightPartNS(ns, text, pattern, expected) lspl::assertions::assertRightPartImpl(ns, text, pattern, expected, __FILE__, __LINE__);
 
 namespace lspl { namespace assertions {
 

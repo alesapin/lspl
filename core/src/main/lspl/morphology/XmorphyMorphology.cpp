@@ -206,8 +206,9 @@ XTag getXmorphyTagSet(const uint64 lspl_tags)
         {28, XTag::_2},
         {29, XTag::_3}};
     XTag result;
-    std::bitset<sizeof(lspl_tags)> tags(lspl_tags);
-    for (size_t i = 0; i < sizeof(lspl_tags); ++i) {
+    std::bitset<sizeof(lspl_tags) * 8> tags(lspl_tags);
+    std::cerr << "BITSET:" << tags.to_string() << std::endl;
+    for (size_t i = 0; i < sizeof(lspl_tags) * 8; ++i) {
       if (tags[i] && REVERSE_MAPPING.count(i))
         result |= REVERSE_MAPPING[i];
     }
@@ -262,6 +263,9 @@ std::unique_ptr<WordForm> XmorphyMorphology::synthesize(
     uint64 requiredAttributesBits, std::string &formText) {
 
   auto tag = getXmorphyTagSet(requiredAttributesBits);
+
+  std::cerr << "BITS:" << requiredAttributesBits << std::endl;
+  std::cerr << "REQUIRED tAG:" << tag << std::endl;
   auto result = analyzer.synthesize(utils::UniString(token), tag);
 
   for (size_t i = 0; i < result.size(); ++i) {
@@ -273,6 +277,7 @@ std::unique_ptr<WordForm> XmorphyMorphology::synthesize(
         const utils::UniString &nf = morph_info.normalForm;
         utils::UniString stem = nf.subString(0, morph_info.stemLen);
         formText = result[i]->getWordForm().getRawString();
+        std::cerr << "FORM TEXT:" << formText << std::endl;
         return std::make_unique<WordForm>(sp, nf.getRawString(),
                                           stem.getRawString(), tag_sets, 1);
       }
