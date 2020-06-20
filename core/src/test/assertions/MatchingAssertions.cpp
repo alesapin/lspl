@@ -14,6 +14,9 @@
 #include <lspl/text/Text.h>
 #include <lspl/text/readers/PlainTextReader.h>
 
+#include <lspl/transforms/PatternTransform.h>
+#include <lspl/transforms/TextTransform.h>
+
 #include <boost/format.hpp>
 
 using lspl::patterns::PatternRef;
@@ -79,4 +82,31 @@ text::TextRef buildTextImpl( const char * textSource, char const *file, int line
 	return text;
 }
 
+void assertRightPartImpl(const NamespaceRef &ns, const char *textSource,
+                         const char *patternSource, const char *result_source,
+                         char const *file, int line)
+{
+
+  PatternRef pattern = buildPatternImpl(ns, patternSource, file, line);
+  TextRef text = buildTextImpl(textSource, file, line);
+
+  const MatchList &matches = text->getMatches(pattern);
+
+  if (matches.size() == 0)
+    throw cute::test_failure(
+        (boost::format("No matches for pattern '%1%' in text '%2%'") %
+         patternSource % textSource)
+            .str(),
+        file, line);
+
+  auto first_variant = matches[0]->getVariants().at(0);
+  auto result = first_variant->getTransformResult<lspl::transforms::TextTransformResult>();
+
+  if (result.text != result_source)
+    throw cute::test_failure(
+        (boost::format("Transform is not correct '%1%' expected '%2%' found ") %
+         result_source % result.text)
+            .str(),
+        file, line);
+}
 } }

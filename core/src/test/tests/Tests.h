@@ -18,7 +18,9 @@ cute::suite patternBuildingSuite();
 cute::suite dictionariesSuite();
 cute::suite matchingSuite();
 cute::suite textReadersSuite();
+cute::suite rightPartSuite();
 
-} }
+}
+}
 
 #endif//_LSPL_TESTS_PATTERNSTEST_H_

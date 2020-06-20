@@ -31,6 +31,8 @@
 
 #define buildText(text) lspl::assertions::buildTextImpl(text,__FILE__,__LINE__)
 
+#define assertRightPart(text,pattern,expected) lspl::assertions::assertRightPartImpl(new lspl::Namespace(),text,pattern,expected,__FILE__,__LINE__);
+
 namespace lspl { namespace assertions {
 
 void assertMatchesImpl( const NamespaceRef & ns, const char * textSource, uint from, uint to, const char * patternSource, char const *f, int line );
@@ -38,6 +40,8 @@ void assertNoMatchesImpl( const NamespaceRef & ns, const char * textSource, cons
 
 void assertRestrictedMatchesImpl( const NamespaceRef & ns, const char * textSource, uint from, uint to, const char * patternSource, const patterns::restrictions::Restriction & r, char const *f, int line );
 void assertNoRestrictedMatchesImpl( const NamespaceRef & ns, const char * textSource, const char * patternSource, const patterns::restrictions::Restriction & r, char const *f, int line );
+
+void assertRightPartImpl(const NamespaceRef &ns, const char *textSource, const char *patternSource, const char *result_source, char const *f, int line);
 
 text::TextRef buildTextImpl( const char * textSource, char const *file, int line );
 

@@ -126,6 +126,7 @@ set(LSPL_TEST_SOURCES
     src/test/tests/MatchingTest.cpp
     src/test/tests/PatternsTest.cpp
     src/test/tests/TextReadersTest.cpp
+    src/test/tests/RightPartTest.cpp
     src/test/LsplTests.cpp
 )
 

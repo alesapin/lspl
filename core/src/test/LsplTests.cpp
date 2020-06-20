@@ -20,6 +20,7 @@ int main() {
 	cute::makeRunner(lis)( patternBuildingSuite(), "PatternBuilding" );
 	cute::makeRunner(lis)( dictionariesSuite(), "Dictionaries" );
 	cute::makeRunner(lis)( matchingSuite(), "Matching" );
+    cute::makeRunner(lis) (rightPartSuite(), "RightPart");
 
-	return 0;
+    return 0;
 }
